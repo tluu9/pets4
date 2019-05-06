@@ -1,0 +1,22 @@
+
+{
+
+  "name" : "tluu9/IT328/pets3",
+  "authors" :
+  [
+    {
+      "name" : "Trang Luu",
+      "email" : "tluu9@mail.greenriver.edu"
+    },
+    {
+      "name" : "Bo Zhang",
+      "email" : "bzhang3@mail.greenriver.edu"
+
+    }
+
+  ],
+  "require" :
+  {
+    "bcosca/fatfree-core" : "dev-master"
+  }
+}
