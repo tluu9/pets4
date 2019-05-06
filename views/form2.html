@@ -19,6 +19,19 @@
                 <option>{{@color}}</option>
             </repeat>
         </select>
+
+        <label>Food</label>
+            <check if="{{ @errors['foods'] }}">
+                <p>  {{ @errors['foods'] }}</p>
+            </check>
+            <repeat group="{{ @theFoods }}" value="{{ @food }}">
+                <label>
+                    <input type="checkbox" name="foods[]" value="{{ @food }}">
+                    <check if="{{ !empty(@foods) && in_array(@food, @foods) }}">
+                        checked="checked"
+                    </check>{{ @food }}
+                </label>
+            </repeat>
         <input type="submit" value="Submit">
     </ul>
 
