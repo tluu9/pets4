@@ -11,6 +11,7 @@ require_once('model/validation-functions.php');
 //Create an instance of the Base class/ instantiate Fat-Free
 $f3 = Base::instance();
 $f3 -> set('colors', array('pink', 'green', 'blue'));
+$f3 -> set('theFoods', array('bone','veggie','steak','seafood'));
 
 //Turn on Fat-free error reporting/Debugging
 $f3->set('DEBUG',3);
@@ -62,34 +63,39 @@ $f3->route('GET|POST /order',
 
     $_SESSION = array();
 
-    if(isset($_POST['animal'])){
-
-        $animal = $_POST['animal'];
-        if(validString($animal))
+        if(!empty($_POST))
         {
-            $_SESSION['animal'] = $animal;
-            $f3->reroute('/color');
-        }else{
-            $f3->set("errors['animal']", "Please enter an animal.");
+            $animal = $_POST ["animal"];
+            $qty = $_POST ["qty"];
+            $f3->set('animal',$animal);
+            $f3->set('qty',$qty);
+
+            if(form1())
+            {
+                $_SESSION['animal'] = $animal;
+                $_SESSION["qty"] = $qty;
+                $f3->reroute("color");
+            }
         }
-    }
     $view = new Template();
     echo $view->render('views/form1.html');
 });
 
 $f3->route('GET|POST /color', function ($f3)
 {
-    if(isset($_POST['color'])) {
+    if (!empty($_POST)) {
         $color = $_POST['color'];
-        if(validColor($color)) {
+        $food = $_POST['food'];
+        $f3->set('color', $color);
+        $f3->set('food', $food);
+        if (form2()) {
             $_SESSION['color'] = $color;
-            $f3->reroute('/result');
+            $_SESSION['food'] = $food;
+            $f3->reroute('/results');
         }
-        else {
-            $f3->set("errors['color']", "Please enter a color");
-        }
+
     }
-    $view=new Template();
+        $view=new Template();
     echo $view->render( 'views/form2.html');
 });
 
