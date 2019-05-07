@@ -1,7 +1,7 @@
 <?php
 session_start();
 //Turn on error reporting
-ini_set('display_errors', 1);
+ini_set('display_errors', TRUE);
 error_reporting(E_ALL);
 
 //require the autoload file autoload.php
@@ -10,7 +10,11 @@ require_once('model/validation-functions.php');
 
 //Create an instance of the Base class/ instantiate Fat-Free
 $f3 = Base::instance();
+
+//color array
 $f3 -> set('colors', array('pink', 'green', 'blue'));
+
+//food array
 $f3 -> set('theFoods', array('bone','veggie','steak','seafood'));
 
 //Turn on Fat-free error reporting/Debugging
@@ -24,12 +28,6 @@ $f3->route('GET /', function()
     echo $view->render('views/home.html');
 });
 
-$f3->route('GET /@animal', function($f3, $params)
-{
-    //Display a view-set view as new template and echo out the view
-    //$view = new Template();
-    //echo $view->render('views/home.html');
-});
 
 //Define a route with a parameter
 $f3->route('GET /@animal', function($f3, $params) {
@@ -81,17 +79,24 @@ $f3->route('GET|POST /order',
     echo $view->render('views/form1.html');
 });
 
-$f3->route('GET|POST /color', function ($f3)
+//pick color-Define a route to display order form 2
+$f3->route('GET|POST /color',
+    function ($f3)
 {
+
     if (!empty($_POST)) {
         $color = $_POST['color'];
-        $food = $_POST['food'];
+        $foods = $_POST['foods'];
+
         $f3->set('color', $color);
-        $f3->set('food', $food);
+        $f3->set('foods', $foods);
+
         if (form2()) {
             $_SESSION['color'] = $color;
-            $_SESSION['food'] = $food;
-            $f3->reroute('/results');
+            $_SESSION['foods'] = $foods;
+
+
+            $f3->reroute('/summary');
         }
 
     }
@@ -100,8 +105,6 @@ $f3->route('GET|POST /color', function ($f3)
 });
 
 $f3->route('GET|POST /summary', function() {
-
-    $_SESSION['color'] = $_POST['color'];
 
     $view = new Template();
     echo $view->render('views/results.html');
