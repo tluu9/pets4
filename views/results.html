@@ -5,9 +5,13 @@
     <title>Order summary</title>
 </head>
 <body>
-<h2><strong>Results Page</strong></h2>
-<h3>Thank you for ordering {{$_SESSION['qty']}} {{$_SESSION['color']}} {{$_SESSION['animal']}}
-    and food is {{$_SESSION['food']}}</h3>
+<h1>Pet Order</h1>
+<h3>Your pet order has been received!</h3>
+
+<p>Pet: {{ @SESSION.animal }}</p>
+<p>Quantity: {{ @SESSION.qty }}</p>
+<p>Color: {{ @SESSION.color }}</p>
+<p>Food: {{ @SESSION.foods }}</p>
 
 </body>
 </html>
